@@ -1,7 +1,7 @@
 # recon
 Parse properties from properties file and support overrides from command line. Similar to Spring Boot
 Example application.properties
-```
+```properties
 app.db.name=testdb
 app.db.user=sa
 app.db.pass=
@@ -16,7 +16,7 @@ spring.datasource.max-active=2
 feature.x.enable=true
 ```
 # Example of your custom AppPropertiesReader
-```
+```java
 public class TestGetProperty {
 
     private AppProperty getProperty;
@@ -47,10 +47,10 @@ public class App {
     public static void main(String[] args) {
     
         // Load properties from application.properties and override with command line arguments
-        AppProperties appProperties = null;
+        TestGetProperty appProperties = null;
         Parser cmdlineParser = new CommandlineParser(args);
         try {
-            appProperties = new AppProperties(
+            appProperties = new TestGetProperty(
                     new GetEffectiveProperty(
                             new GetProperty(
                                     APPLICATION_PROPERTIES,
