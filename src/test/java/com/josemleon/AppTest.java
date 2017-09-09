@@ -85,4 +85,56 @@ public class AppTest {
                 ).getFeatureXEnabled()
         );
     }
+
+    @Test
+    public void verifyCmdlinePropertyOverridesFile() throws PropertiesFileNotFoundException, IOException {
+        Parser cmdlineParser = new CommandlineParser(new String[]{ "--feature.x.enable=false" });
+        assertEquals(
+                "Should have been able to override the value from properties file",
+                false,
+                new TestGetProperty(
+                        new GetEffectiveProperty(
+                                new GetProperty(
+                                        APPLICATION_PROPERTIES,
+                                        cmdlineParser
+                                ),
+                                cmdlineParser
+                        )
+                ).getFeatureXEnabled()
+        );
+    }
+
+    @Test
+    public void verifyMultipleCmdlineOverridesAreSupported() throws PropertiesFileNotFoundException, IOException {
+        Parser cmdlineParser = new CommandlineParser(new String[]{
+                "--feature.x.enable=false",
+                "--app.db.name=bogus"
+        });
+        assertEquals(
+                "Cmdline property value should have been overridden",
+                false,
+                new TestGetProperty(
+                        new GetEffectiveProperty(
+                                new GetProperty(
+                                        APPLICATION_PROPERTIES,
+                                        cmdlineParser
+                                ),
+                                cmdlineParser
+                        )
+                ).getFeatureXEnabled()
+        );
+        assertEquals(
+                "Cmdline property value should have been overridden",
+                "bogus",
+                new TestGetProperty(
+                        new GetEffectiveProperty(
+                                new GetProperty(
+                                        APPLICATION_PROPERTIES,
+                                        cmdlineParser
+                                ),
+                                cmdlineParser
+                        )
+                ).getDatabaseName()
+        );
+    }
 }
