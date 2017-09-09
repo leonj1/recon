@@ -9,7 +9,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created for K and M Consulting LLC.
  * Created by Jose M Leon 2017
  **/
 public class GetProperty implements AppProperty {
