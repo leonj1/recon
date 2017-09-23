@@ -34,4 +34,8 @@ public class TestGetProperty {
     public String getDataSourceUrl() throws PropertiesFileNotFoundException, IOException {
         return this.getProperty.value("spring.datasource.url");
     }
+
+    public String getEmailFrom() throws PropertiesFileNotFoundException, IOException {
+        return this.getProperty.value("email.from");
+    }
 }

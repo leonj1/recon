@@ -88,7 +88,7 @@ public class AppTest {
 
     @Test
     public void verifyCmdlinePropertyOverridesFile() throws PropertiesFileNotFoundException, IOException {
-        Parser cmdlineParser = new CommandlineParser(new String[]{ "--feature.x.enable=false" });
+        Parser cmdlineParser = new CommandlineParser(new String[]{"--feature.x.enable=false"});
         assertEquals(
                 "Should have been able to override the value from properties file",
                 false,
@@ -135,6 +135,48 @@ public class AppTest {
                                 cmdlineParser
                         )
                 ).getDatabaseName()
+        );
+    }
+
+    @Test
+    public void verifyGetNestedPropertiesWithAtSign() throws PropertiesFileNotFoundException, IOException {
+        Parser cmdlineParser = new CommandlineParser(new String[0]);
+        assertEquals(
+                "Should be able to get a property with nested properties and an @ sign. Really regex check",
+                "support@example.com",
+                new TestGetProperty(
+                        new GetEffectiveProperty(
+                                new GetProperty(
+                                        APPLICATION_PROPERTIES,
+                                        cmdlineParser
+                                ),
+                                cmdlineParser
+                        )
+                ).getEmailFrom()
+        );
+    }
+
+    @Test
+    public void verifyCanFetchPropertyMultipleTimes() throws PropertiesFileNotFoundException, IOException {
+        Parser cmdlineParser = new CommandlineParser(new String[0]);
+        TestGetProperty testGetProperty = new TestGetProperty(
+                new GetEffectiveProperty(
+                        new GetProperty(
+                                APPLICATION_PROPERTIES,
+                                cmdlineParser
+                        ),
+                        cmdlineParser
+                )
+        );
+        assertEquals(
+                "Should be able to get the property initially",
+                "support@example.com",
+                testGetProperty.getEmailFrom()
+        );
+        assertEquals(
+                "Should be able to get the property subsequently",
+                "support@example.com",
+                testGetProperty.getEmailFrom()
         );
     }
 }
