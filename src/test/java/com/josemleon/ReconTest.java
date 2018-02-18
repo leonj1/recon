@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Recon unit tests
  */
-public class AppTest {
+public class ReconTest {
     // Properties file intended to be in classpath
     private static final String APPLICATION_PROPERTIES = "application.properties";
 
