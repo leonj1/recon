@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash 
 
 CURRENT_BRANCH=`git branch | grep \* | cut -d ' ' -f2`
 
