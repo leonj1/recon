@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 CURRENT_BRANCH=`git branch | grep \* | cut -d ' ' -f2`
 
@@ -38,4 +38,6 @@ if [ -z "$NEEDS_TAG" ]; then
 else
    echo "Already a tag on this commit"
 fi
+
+# no op
 
